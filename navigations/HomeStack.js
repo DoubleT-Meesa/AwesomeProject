@@ -3,6 +3,10 @@ import * as React from 'react';
 import BmiScreen from '../screens/BmiScreen';
 import NetworkScreen from '../screens/NetworkScreen';
 import HomeScreen from '../screens/HomeScreen';
+import MidtermFirstScreen from '../screens/MidtermFirstScreen';
+import MidtermTab from '../navigations/MidtermTab';
+import MidtermHomeScreen from '../screens/MidtermHomeScreen';
+
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -27,6 +31,18 @@ export default function HomeStack() {
                 component={NetworkScreen} 
                 options={{ title: 'Network Screen Title' }} 
                 />
+            <Stack.Screen 
+                name="MidtermFirstScreen" 
+                component={MidtermFirstScreen} 
+                options={{ title: 'MidtermFirst Screen Title' }} 
+                />
+                <Stack.Screen 
+                name="MidtermTab" 
+                component={MidtermTab} 
+                options={{ title: 'Midterm Tab Title' }} 
+                />
+                
+            
             
         </Stack.Navigator>
     );

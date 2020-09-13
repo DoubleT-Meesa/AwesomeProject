@@ -1,9 +1,10 @@
-import React , { useState, useEffect  } from 'react';
+import React , { useState, useEffect, useContext   } from 'react';
 import { View, TouchableOpacity, FlatList, Text , YellowBox  } from 'react-native';
 import TodoItem  from '../components/TodoItem';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { fb } from '../db_config';
+import { AuthContext, AuthContextProvider } from "../hooks/AuthContext";
 
 export default function TodoScreen({ navigation }) {
     const [todos , setTodos] = useState(
@@ -14,12 +15,14 @@ export default function TodoScreen({ navigation }) {
         ]     
     );
 
+    const [user, setUser] = useContext(AuthContext);
+
     const onCreate = () => {
         let new_data = {
             _id : '_' + Math.random().toString(36).substr(2, 9), //RANDOM NUMBER
             title : "", //Empty String
             completed : false,
-           
+            user_id : user.uid,
         };
         //CLONE ARRAY
         let t = [...todos];
@@ -104,6 +107,7 @@ export default function TodoScreen({ navigation }) {
 
     const readTodosFirebase = async () => {
         fb.firestore().collection("todos")
+            .where("user_id", "==", user.uid)
             .get().then((querySnapshot) => {
                 const todos = querySnapshot.docs.map(doc => doc.data());
                 
